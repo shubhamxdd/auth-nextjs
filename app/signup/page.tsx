@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const page = () => {
@@ -61,6 +62,9 @@ const page = () => {
             >
               SignUp
             </button>
+            <Link href={"login"} className="underline py-2 px-4">
+              Login
+            </Link>
           </div>
         </form>
       </div>
