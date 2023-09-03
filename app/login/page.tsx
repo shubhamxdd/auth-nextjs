@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast/headless";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const router = useRouter();
