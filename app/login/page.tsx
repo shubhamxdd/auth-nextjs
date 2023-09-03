@@ -13,6 +13,7 @@ const LoginPage = () => {
     password: "",
   });
   const [disabledBtn, setDisabledBtn] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
       setDisabledBtn(false);
@@ -23,19 +24,31 @@ const LoginPage = () => {
 
   const onLogin = async () => {
     try {
+      setLoading(true);
       const res = await axios.post("/api/users/login", user);
       console.log("success login", res.data);
       toast.success("Login Success");
       router.push("/profile");
+      setLoading(false);
     } catch (error: any) {
+      setLoading(false);
       console.log("error login", error.message);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <>
       <div className="mt-4 mx-10">
         <h1 className="text-center text-4xl font-bold">Login Page</h1>
+        <h1
+          className={`text-center text-2xl font-semibold mt-4 ${
+            loading ? "" : "hidden"
+          }`}
+        >
+          {loading ? "Verifying details" : ""}
+        </h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();

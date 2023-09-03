@@ -14,14 +14,21 @@ const SignupPage = () => {
     password: "",
   });
   const [disabledBtn, setDisabledBtn] = useState(false);
+  const [loading, setLoading] = useState(false);
   const onSignup = async () => {
     try {
+      setLoading(true);
       const res = await axios.post("/api/users/signup", user);
       console.log("Signup sucess! ", res.data);
       router.push("/login");
+      toast.success("Signup Success");
+      setLoading(false);
     } catch (error: any) {
-      console.log(error);
+      setLoading(false);
+      console.log(error.message);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,6 +48,13 @@ const SignupPage = () => {
     <>
       <div className="mt-4 mx-10">
         <h1 className="text-center text-4xl font-bold">Signup Page</h1>
+        <h1
+          className={`text-center text-2xl font-semibold mt-4 ${
+            loading ? "" : "hidden"
+          }`}
+        >
+          {loading ? "Adding user to db" : ""}
+        </h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
