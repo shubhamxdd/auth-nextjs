@@ -1,14 +1,42 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Toaster, { toast } from "react-hot-toast";
 
-const page = () => {
+const SignupPage = () => {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     username: "",
     password: "",
   });
+  const [disabledBtn, setDisabledBtn] = useState(false);
+  const onSignup = async () => {
+    try {
+      const res = await axios.post("/api/users/signup", user);
+      console.log("Signup sucess! ", res.data);
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      user.email.length > 0 &&
+      user.username.length > 0 &&
+      user.password.length > 0
+    ) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
+  }, [user]);
+
   return (
     <>
       <div className="mt-4 mx-10">
@@ -57,8 +85,10 @@ const page = () => {
               className="border-zinc-500 border-2 outline-none px-3 py-2 mx-3 mb-3"
             />
             <button
+              onClick={() => onSignup()}
               type="submit"
-              className="bg-blue-500 text-white rounded-md outline-none hover:bg-blue-600 px-4 py-2 -pb-2"
+              disabled={disabledBtn ? true : false}
+              className="bg-blue-500 text-white rounded-md outline-none hover:bg-blue-600 disabled:bg-slate-600 px-4 py-2 -pb-2"
             >
               SignUp
             </button>
@@ -72,4 +102,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignupPage;
