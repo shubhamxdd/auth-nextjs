@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast/headless";
+import { useEffect, useState } from "react";
 
 const page = () => {
+  const [data, setData] = useState("");
   const router = useRouter();
   const logout = async () => {
     try {
@@ -17,6 +19,16 @@ const page = () => {
       toast.error("Error logging out ", error.message);
     }
   };
+
+  const getUserDetails = async () => {
+    const res = await axios.get("/api/users/adm");
+    console.log(res.data);
+    setData(res.data.data._id);
+  };
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
   return (
     <>
       <div className="mx-10 mt-4">
@@ -35,6 +47,13 @@ const page = () => {
             Go to homepage
           </Link>
         </div>
+        <h1 className="font-semibold text-3xl text-center mt-4">
+          {data === "" ? (
+            "kuch nahi"
+          ) : (
+            <Link href={`/profile/${data}`}>{data}</Link>
+          )}
+        </h1>
       </div>
     </>
   );
