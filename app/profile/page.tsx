@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast/headless";
 import { useEffect, useState } from "react";
 
-const page = () => {
+const ProfilePage = () => {
   const [data, setData] = useState("");
   const router = useRouter();
   const logout = async () => {
@@ -59,4 +59,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProfilePage;
