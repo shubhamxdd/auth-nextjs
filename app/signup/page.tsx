@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Toaster, { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const SignupPage = () => {
   const router = useRouter();
