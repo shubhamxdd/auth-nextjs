@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const page = ({ params }: { params: { id: number } }) => {
+const DynamicProfileRoute = ({ params }: { params: { id: number } }) => {
   return (
     <>
       <div className="mx-10 mt-4">
@@ -21,4 +21,4 @@ const page = ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default DynamicProfileRoute;
